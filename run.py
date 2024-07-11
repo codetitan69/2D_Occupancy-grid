@@ -2,17 +2,38 @@ import subprocess
 import sys
 import threading
 import time
+import logging
+
+# Set up logging
+logging.basicConfig(filename='Test/latency_log.txt', level=logging.INFO, format='%(asctime)s - %(message)s')
+
+def log_time(event):
+    logging.info(event)
 
 def run_listener(script_name):
+    log_time(f'Starting {script_name}')
     subprocess.run([sys.executable, script_name])
+    log_time(f'Finished {script_name}')
 
 def run_repeatedly(script_name, interval):
     while True:
+        start_time = time.time()
+        log_time(f'Starting {script_name}')
         subprocess.run([sys.executable, script_name])
+        end_time = time.time()
+        log_time(f'Finished {script_name}')
+        log_time(f'{script_name} took {end_time - start_time} seconds')
         time.sleep(interval)
 
 def run_image_publisher():
-    subprocess.Popen([sys.executable, 'publish.py'])
+    while True:
+        start_time = time.time()
+        log_time('Starting publish.py')
+        subprocess.run([sys.executable, 'publish.py'])
+        end_time = time.time()
+        log_time('Finished publish.py')
+        log_time(f'publish.py took {end_time - start_time} seconds')
+        time.sleep(1)  # Adjust the interval as needed
 
 if __name__ == "__main__":
     listener_thread = threading.Thread(target=run_listener, args=('listener.py',))
@@ -29,4 +50,3 @@ if __name__ == "__main__":
     script1_thread.join()
     script2_thread.join()
     publisher_thread.join()
-
