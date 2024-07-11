@@ -1,0 +1,4 @@
+format: pgm
+resolution: !!python/tuple
+- 512
+- 512
