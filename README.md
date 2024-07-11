@@ -14,5 +14,5 @@
   ```
 
 ## How to access the resulting occupancy grid:
-       1. grid.pgm and grid.yaml file is generated in "grid" folder.
-       2. the grid is also published to "/Occupancy_grid" ros2 topic and can be accessed by subscribing to it.
+    1. grid.pgm and grid.yaml file is generated in "grid" folder.
+    2. the grid is also published to "/Occupancy_grid" ros2 topic and can be accessed by subscribing to it.
